@@ -11,6 +11,7 @@ import { IVeriFi } from "./IVeriFi.sol";
 /// @title VeriFi
 /// @notice Contract for managing a Merkle root-based verification system with role-based access control
 contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgradeable {
+    /// @notice Role identifier for managers
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
     constructor() {
