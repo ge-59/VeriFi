@@ -6,6 +6,7 @@ import { AccessControl } from "@oz/access/AccessControl.sol";
 
 contract VeriFi is AccessControl {
     bytes32 public MERKLE_ROOT;
+    bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
     error Constructor_InvalidMerkleRoot();
     error UpdateMerkleRoot_InvalidMerkleRoot();
