@@ -17,6 +17,7 @@ contract VeriFi is AccessControl {
         if (merkleRoot == bytes32(0)) revert Constructor_InvalidMerkleRoot();
         MERKLE_ROOT = merkleRoot;
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
+        _grantRole(MANAGER_ROLE, admin);
     }
 
     function updateMerkleRoot(bytes32 newRoot) external {
