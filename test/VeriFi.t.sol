@@ -51,4 +51,12 @@ contract VeriFiTest is Test {
         
         assertTrue(veriFi.hasRole(veriFi.MANAGER_ROLE(), manager), "Manager should have MANAGER_ROLE after being added");
     }
+
+    function test_RemoveManager() public {
+        vm.startPrank(admin);
+        veriFi.addManager(manager);
+        veriFi.removeManager(manager);
+        
+        assertFalse(veriFi.hasRole(veriFi.MANAGER_ROLE(), manager), "Manager should not have MANAGER_ROLE after being removed");
+    }
 }
