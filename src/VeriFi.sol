@@ -38,4 +38,6 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         bytes32 leaf = keccak256(abi.encodePacked(account));
         return MerkleProof.verify(proof, MERKLE_ROOT, leaf);
     }
+
+    function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {}
 }
