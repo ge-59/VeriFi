@@ -6,8 +6,9 @@ import {VeriFi} from "../src/VeriFi.sol";
 
 contract VeriFiTest is Test {
     VeriFi public veriFi;
+    address public admin;
 
     function setUp() public {
+        admin = makeAddr("admin");
     }
-
 }
