@@ -18,10 +18,6 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
     error RemoveManager_InvalidManagerAddress();
     error AuthorizeUpgrade_InvalidImplementationAddress();
 
-    event MerkleRootUpdated(bytes32 newRoot);
-    event ManagerAdded(address newManager);
-    event ManagerRemoved(address manager);
-
     constructor() {
         _disableInitializers();
     }
