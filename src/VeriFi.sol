@@ -11,13 +11,6 @@ import { IVeriFi } from "./IVeriFi.sol";
 contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
-    error Initialization_InvalidMerkleRoot();
-    error UpdateMerkleRoot_InvalidMerkleRoot();
-    error Initialization_InvalidAdminAddress();
-    error AddManager_InvalidManagerAddress();
-    error RemoveManager_InvalidManagerAddress();
-    error AuthorizeUpgrade_InvalidImplementationAddress();
-
     constructor() {
         _disableInitializers();
     }
