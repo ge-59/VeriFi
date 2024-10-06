@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.25;
 
+/// @title VeriFiStorage
+/// @dev Storage library to leverage unstructured storage pattern for VeriFi contract
 library VeriFiStorage {
 
     struct Layout {
