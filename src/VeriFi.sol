@@ -6,8 +6,9 @@ import { AccessControlUpgradeable } from "@oz-upgradeable/access/AccessControlUp
 import { UUPSUpgradeable } from "@oz-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { Initializable } from "@oz-upgradeable/proxy/utils/Initializable.sol";
 import { VeriFiStorage as Storage } from "./VeriFiStorage.sol";
+import { IVeriFi } from "./IVeriFi.sol";
 
-contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
+contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
     error Initialization_InvalidMerkleRoot();
