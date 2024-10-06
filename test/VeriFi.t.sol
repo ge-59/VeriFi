@@ -59,4 +59,11 @@ contract VeriFiTest is Test {
         
         assertFalse(veriFi.hasRole(veriFi.MANAGER_ROLE(), manager), "Manager should not have MANAGER_ROLE after being removed");
     }
+
+    function testFail_UpdateMerkleRoot_NonManager() public {
+        bytes32 newRoot = keccak256("newRoot");
+        
+        vm.prank(user);
+        veriFi.updateMerkleRoot(newRoot);
+    }
 }
