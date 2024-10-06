@@ -19,6 +19,12 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
         _disableInitializers();
     }
 
+    /// @inheritdoc UUPSUpgradeable
+    function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {
+        if (newImplementation == address(0)) revert AuthorizeUpgrade_InvalidImplementationAddress();
+    }
+    
+    /// @inheritdoc IVeriFi
     function __VeriFi_init(bytes32 merkleRoot, address admin) external initializer {
         if (merkleRoot == bytes32(0)) revert Initialization_InvalidMerkleRoot();
         if (admin == address(0)) revert Initialization_InvalidAdminAddress();
@@ -29,34 +35,36 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
         _grantRole(MANAGER_ROLE, admin);
     }
 
+    /// @inheritdoc IVeriFi
     function updateMerkleRoot(bytes32 newRoot) external onlyRole(MANAGER_ROLE) {
         if (newRoot == bytes32(0)) revert UpdateMerkleRoot_InvalidMerkleRoot();
         Storage.layout().MERKLE_ROOT = newRoot;
         emit MerkleRootUpdated(newRoot);
     }
 
+    /// @inheritdoc IVeriFi
     function verify(address account, bytes32[] calldata proof) external view returns (bool) {
         bytes32 leaf = keccak256(abi.encodePacked(account));
         return MerkleProof.verify(proof, Storage.layout().MERKLE_ROOT, leaf);
     }
 
-    function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {
-        if (newImplementation == address(0)) revert AuthorizeUpgrade_InvalidImplementationAddress();
-    }
-
+    /// @inheritdoc IVeriFi
     function addManager(address newManager) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (newManager == address(0)) revert AddManager_InvalidManagerAddress();
         _grantRole(MANAGER_ROLE, newManager);
         emit ManagerAdded(newManager);
     }
 
+    /// @inheritdoc IVeriFi
     function removeManager(address manager) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (manager == address(0)) revert RemoveManager_InvalidManagerAddress();
         _revokeRole(MANAGER_ROLE, manager);
         emit ManagerRemoved(manager);
     }
 
+    /// @inheritdoc IVeriFi
     function getMerkleRoot() external view returns (bytes32) {
         return Storage.layout().MERKLE_ROOT;
     }
+
 }
