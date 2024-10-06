@@ -3,5 +3,5 @@ pragma solidity ^0.8.25;
 
 
 contract VeriFi {
-
+    bytes32 public immutable MERKLE_ROOT;
 }
