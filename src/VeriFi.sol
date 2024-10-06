@@ -11,6 +11,7 @@ contract VeriFi {
     }
 
     function verifyAddress(address account, bytes32[] calldata proof) public view returns (bool) {
+        bytes32 leaf = keccak256(abi.encodePacked(account));
         
     }
 }
