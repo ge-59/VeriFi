@@ -12,6 +12,7 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
 
     error Initialization_InvalidMerkleRoot();
     error UpdateMerkleRoot_InvalidMerkleRoot();
+    error Initialization_InvalidAdminAddress();
 
     event MerkleRootUpdated(bytes32 newRoot);
 
@@ -21,6 +22,7 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
 
     function initialize(bytes32 merkleRoot, address admin) public initializer {
         if (merkleRoot == bytes32(0)) revert Initialization_InvalidMerkleRoot();
+        if (admin == address(0)) revert Initialization_InvalidAdminAddress();
         MERKLE_ROOT = merkleRoot;
         __AccessControl_init();
         __UUPSUpgradeable_init();
