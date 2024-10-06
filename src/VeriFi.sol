@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
+import { MerkleProof } from "@oz/utils/cryptography/MerkleProof.sol";
 
 contract VeriFi {
     bytes32 public immutable MERKLE_ROOT;
