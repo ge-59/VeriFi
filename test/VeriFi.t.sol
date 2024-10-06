@@ -44,4 +44,11 @@ contract VeriFiTest is Test {
         
         assertEq(veriFi.getMerkleRoot(), newRoot, "Merkle root should be updated");
     }
+
+    function test_AddManager() public {
+        vm.prank(admin);
+        veriFi.addManager(manager);
+        
+        assertTrue(veriFi.hasRole(veriFi.MANAGER_ROLE(), manager), "Manager should have MANAGER_ROLE after being added");
+    }
 }
