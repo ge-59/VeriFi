@@ -2,9 +2,11 @@
 pragma solidity ^0.8.25;
 
 import { MerkleProof } from "@oz/utils/cryptography/MerkleProof.sol";
-import { AccessControl } from "@oz/access/AccessControl.sol";
+import { AccessControlUpgradeable } from "@oz-upgradeable/access/AccessControlUpgradeable.sol";
+import { UUPSUpgradeable } from "@oz-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import { Initializable } from "@oz-upgradeable/proxy/utils/Initializable.sol";
 
-contract VeriFi is AccessControl {
+contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     bytes32 public MERKLE_ROOT;
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
