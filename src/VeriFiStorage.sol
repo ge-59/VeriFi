@@ -6,7 +6,9 @@ pragma solidity ^0.8.25;
 /// @dev Storage library to leverage unstructured storage pattern for VeriFi contract
 library VeriFiStorage {
 
+    /// @dev Struct containing all state for the VeriFi contract
     struct Layout {
+        /// @dev The Merkle root used for verification
         bytes32 MERKLE_ROOT;
     }
 
