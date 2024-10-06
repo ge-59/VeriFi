@@ -10,14 +10,20 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     bytes32 public MERKLE_ROOT;
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
-    error Constructor_InvalidMerkleRoot();
+    error Initialization_InvalidMerkleRoot();
     error UpdateMerkleRoot_InvalidMerkleRoot();
 
     event MerkleRootUpdated(bytes32 newRoot);
 
-    constructor(bytes32 merkleRoot, address admin) {
-        if (merkleRoot == bytes32(0)) revert Constructor_InvalidMerkleRoot();
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize(bytes32 merkleRoot, address admin) public initializer {
+        if (merkleRoot == bytes32(0)) revert Initialization_InvalidMerkleRoot();
         MERKLE_ROOT = merkleRoot;
+        __AccessControl_init();
+        __UUPSUpgradeable_init();
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
         _grantRole(MANAGER_ROLE, admin);
     }
