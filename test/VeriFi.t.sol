@@ -35,4 +35,13 @@ contract VeriFiTest is Test {
         assertTrue(veriFi.hasRole(veriFi.MANAGER_ROLE(), admin), "Admin should have MANAGER_ROLE");
         assertFalse(veriFi.hasRole(veriFi.MANAGER_ROLE(), manager), "Manager should not have MANAGER_ROLE initially");
     }
+
+    function test_UpdateMerkleRoot() public {
+        bytes32 newRoot = keccak256("newRoot");
+        
+        vm.prank(admin);
+        veriFi.updateMerkleRoot(newRoot);
+        
+        assertEq(veriFi.getMerkleRoot(), newRoot, "Merkle root should be updated");
+    }
 }
