@@ -40,4 +40,12 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     }
 
     function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {}
+
+    function addManager(address newManager) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _grantRole(MANAGER_ROLE, newManager);
+    }
+
+    function removeManager(address manager) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        _revokeRole(MANAGER_ROLE, manager);
+    }
 }
