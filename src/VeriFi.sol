@@ -15,7 +15,7 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
         _disableInitializers();
     }
 
-    function __VeriFi_init(bytes32 merkleRoot, address admin) public initializer {
+    function __VeriFi_init(bytes32 merkleRoot, address admin) external initializer {
         if (merkleRoot == bytes32(0)) revert Initialization_InvalidMerkleRoot();
         if (admin == address(0)) revert Initialization_InvalidAdminAddress();
         Storage.layout().MERKLE_ROOT = merkleRoot;
@@ -31,7 +31,7 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
         emit MerkleRootUpdated(newRoot);
     }
 
-    function verify(address account, bytes32[] calldata proof) public view returns (bool) {
+    function verify(address account, bytes32[] calldata proof) external view returns (bool) {
         bytes32 leaf = keccak256(abi.encodePacked(account));
         return MerkleProof.verify(proof, Storage.layout().MERKLE_ROOT, leaf);
     }
@@ -52,7 +52,7 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
         emit ManagerRemoved(manager);
     }
 
-    function getMerkleRoot() public view returns (bytes32) {
+    function getMerkleRoot() external view returns (bytes32) {
         return Storage.layout().MERKLE_ROOT;
     }
 }
