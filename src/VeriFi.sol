@@ -2,8 +2,9 @@
 pragma solidity ^0.8.25;
 
 import { MerkleProof } from "@oz/utils/cryptography/MerkleProof.sol";
+import { AccessControl } from "@oz/access/AccessControl.sol";
 
-contract VeriFi {
+contract VeriFi is AccessControl {
     bytes32 public MERKLE_ROOT;
 
     error Constructor_InvalidMerkleRoot();
