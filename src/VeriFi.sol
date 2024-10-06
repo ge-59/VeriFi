@@ -25,7 +25,7 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         _disableInitializers();
     }
 
-    function initialize(bytes32 merkleRoot, address admin) public initializer {
+    function __VeriFi_init(bytes32 merkleRoot, address admin) public initializer {
         if (merkleRoot == bytes32(0)) revert Initialization_InvalidMerkleRoot();
         if (admin == address(0)) revert Initialization_InvalidAdminAddress();
         Storage.layout().MERKLE_ROOT = merkleRoot;
