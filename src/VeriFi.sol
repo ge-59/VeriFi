@@ -14,9 +14,11 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     error UpdateMerkleRoot_InvalidMerkleRoot();
     error Initialization_InvalidAdminAddress();
     error AddManager_InvalidManagerAddress();
+    error RemoveManager_InvalidManagerAddress();
 
     event MerkleRootUpdated(bytes32 newRoot);
     event ManagerAdded(address newManager);
+    event ManagerRemoved(address manager);
 
     constructor() {
         _disableInitializers();
@@ -52,6 +54,8 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     }
 
     function removeManager(address manager) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (manager == address(0)) revert RemoveManager_InvalidManagerAddress();
         _revokeRole(MANAGER_ROLE, manager);
+        emit ManagerRemoved(manager);
     }
 }
