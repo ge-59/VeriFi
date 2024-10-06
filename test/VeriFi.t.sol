@@ -28,4 +28,11 @@ contract VeriFiTest is Test {
         ERC1967Proxy proxy = new ERC1967Proxy(address(veriFiImplementation), initData);
         veriFi = VeriFi(address(proxy));
     }
+
+    function test_InitialState() public {
+        assertEq(veriFi.getMerkleRoot(), initialRoot, "Initial Merkle root should be set correctly");
+        assertTrue(veriFi.hasRole(veriFi.DEFAULT_ADMIN_ROLE(), admin), "Admin should have DEFAULT_ADMIN_ROLE");
+        assertTrue(veriFi.hasRole(veriFi.MANAGER_ROLE(), admin), "Admin should have MANAGER_ROLE");
+        assertFalse(veriFi.hasRole(veriFi.MANAGER_ROLE(), manager), "Manager should not have MANAGER_ROLE initially");
+    }
 }
