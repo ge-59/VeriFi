@@ -15,6 +15,8 @@ library VeriFiStorage {
      bytes32 internal constant STORAGE_SLOT =
         keccak256('projects.contracts.storage.verifi');
 
+    /// @dev Returns the storage layout
+    /// @return l The storage layout
     function layout() internal pure returns (Layout storage l) {
         bytes32 slot = STORAGE_SLOT;
         assembly {
