@@ -15,6 +15,7 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     error Initialization_InvalidAdminAddress();
     error AddManager_InvalidManagerAddress();
     error RemoveManager_InvalidManagerAddress();
+    error AuthorizeUpgrade_InvalidImplementationAddress();
 
     event MerkleRootUpdated(bytes32 newRoot);
     event ManagerAdded(address newManager);
@@ -45,7 +46,9 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         return MerkleProof.verify(proof, MERKLE_ROOT, leaf);
     }
 
-    function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {}
+    function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {
+        if (newImplementation == address(0)) revert AuthorizeUpgrade_InvalidImplementationAddress();
+    }
 
     function addManager(address newManager) external onlyRole(DEFAULT_ADMIN_ROLE) {
         if (newManager == address(0)) revert AddManager_InvalidManagerAddress();
