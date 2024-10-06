@@ -4,13 +4,20 @@ pragma solidity ^0.8.25;
 import { MerkleProof } from "@oz/utils/cryptography/MerkleProof.sol";
 
 contract VeriFi {
-    bytes32 public immutable MERKLE_ROOT;
+    bytes32 public MERKLE_ROOT;
 
     error Constructor_InvalidMerkleRoot();
+
+    event MerkleRootUpdated(bytes32 newRoot);
 
     constructor(bytes32 merkleRoot) {
         if (merkleRoot == bytes32(0)) revert Constructor_InvalidMerkleRoot();
         MERKLE_ROOT = merkleRoot;
+    }
+
+    function updateMerkleRoot(bytes32 newRoot) external {
+        MERKLE_ROOT = newRoot;
+        emit MerkleRootUpdated(newRoot);
     }
 
     function verify(address account, bytes32[] calldata proof) public view returns (bool) {
