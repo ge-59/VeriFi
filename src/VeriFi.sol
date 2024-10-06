@@ -61,4 +61,8 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
         _revokeRole(MANAGER_ROLE, manager);
         emit ManagerRemoved(manager);
     }
+
+    function getMerkleRoot() public view returns (bytes32) {
+        return Storage.layout().MERKLE_ROOT;
+    }
 }
