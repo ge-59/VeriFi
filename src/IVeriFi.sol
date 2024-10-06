@@ -20,17 +20,56 @@ interface IVeriFi {
     /// @param manager Address of the removed manager
     event ManagerRemoved(address manager);
 
+    /////////////////////////////////
+    ////////////  ERRORS  ///////////
+    /////////////////////////////////
+
+    /// @notice Thrown when attempting to initialize with an invalid Merkle root
     error Initialization_InvalidMerkleRoot();
-    error UpdateMerkleRoot_InvalidMerkleRoot();
+
+    /// @notice Thrown when attempting to initialize with an invalid admin address
     error Initialization_InvalidAdminAddress();
+
+    /// @notice Thrown when attempting to update the Merkle root with an invalid value
+    error UpdateMerkleRoot_InvalidMerkleRoot();
+
+    /// @notice Thrown when attempting to add a manager with an invalid address
     error AddManager_InvalidManagerAddress();
+
+    /// @notice Thrown when attempting to remove a manager with an invalid address
     error RemoveManager_InvalidManagerAddress();
+
+    /// @notice Thrown when attempting to upgrade to an invalid implementation address
     error AuthorizeUpgrade_InvalidImplementationAddress();
 
+    //////////////////////////////////
+    //////////// FUNCTIONS ///////////
+    //////////////////////////////////
+
+    /// @notice Initializes the VeriFi contract
+    /// @param merkleRoot Initial Merkle root value
+    /// @param admin Address of the admin
     function __VeriFi_init(bytes32 merkleRoot, address admin) external;
+
+    /// @notice Updates the Merkle root
+    /// @param newRoot New Merkle root value
     function updateMerkleRoot(bytes32 newRoot) external;
+
+    /// @notice Verifies if an account is part of the Merkle tree
+    /// @param account Address of the account to verify
+    /// @param proof Merkle proof for the account
+    /// @return bool True if the account is verified, false otherwise
     function verify(address account, bytes32[] calldata proof) external view returns (bool);
+
+    /// @notice Adds a new manager
+    /// @param newManager Address of the new manager to add
     function addManager(address newManager) external;
+
+    /// @notice Removes a manager
+    /// @param manager Address of the manager to remove
     function removeManager(address manager) external;
+
+    /// @notice Retrieves the current Merkle root
+    /// @return bytes32 Current Merkle root value
     function getMerkleRoot() external view returns (bytes32);
 }
