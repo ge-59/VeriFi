@@ -5,9 +5,9 @@ import { MerkleProof } from "@oz/utils/cryptography/MerkleProof.sol";
 import { AccessControlUpgradeable } from "@oz-upgradeable/access/AccessControlUpgradeable.sol";
 import { UUPSUpgradeable } from "@oz-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import { Initializable } from "@oz-upgradeable/proxy/utils/Initializable.sol";
+import { VeriFiStorage } from "./VeriFiStorage.sol";
 
 contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
-    bytes32 public MERKLE_ROOT;
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
     error Initialization_InvalidMerkleRoot();
@@ -28,7 +28,7 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
     function initialize(bytes32 merkleRoot, address admin) public initializer {
         if (merkleRoot == bytes32(0)) revert Initialization_InvalidMerkleRoot();
         if (admin == address(0)) revert Initialization_InvalidAdminAddress();
-        MERKLE_ROOT = merkleRoot;
+        VeriFiStorage.layout().MERKLE_ROOT = merkleRoot;
         __AccessControl_init();
         __UUPSUpgradeable_init();
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
@@ -37,13 +37,13 @@ contract VeriFi is Initializable, AccessControlUpgradeable, UUPSUpgradeable {
 
     function updateMerkleRoot(bytes32 newRoot) external onlyRole(MANAGER_ROLE) {
         if (newRoot == bytes32(0)) revert UpdateMerkleRoot_InvalidMerkleRoot();
-        MERKLE_ROOT = newRoot;
+        VeriFiStorage.layout().MERKLE_ROOT = newRoot;
         emit MerkleRootUpdated(newRoot);
     }
 
     function verify(address account, bytes32[] calldata proof) public view returns (bool) {
         bytes32 leaf = keccak256(abi.encodePacked(account));
-        return MerkleProof.verify(proof, MERKLE_ROOT, leaf);
+        return MerkleProof.verify(proof, VeriFiStorage.layout().MERKLE_ROOT, leaf);
     }
 
     function _authorizeUpgrade(address newImplementation) internal override onlyRole(MANAGER_ROLE) {
