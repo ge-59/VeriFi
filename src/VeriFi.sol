@@ -14,6 +14,7 @@ contract VeriFi is IVeriFi, Initializable, AccessControlUpgradeable, UUPSUpgrade
     /// @notice Role identifier for managers
     bytes32 public constant MANAGER_ROLE = keccak256("MANAGER_ROLE");
 
+    /// @notice Disables initializers for the implementation contract
     constructor() {
         _disableInitializers();
     }
