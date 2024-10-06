@@ -7,6 +7,7 @@ contract VeriFi {
     bytes32 public MERKLE_ROOT;
 
     error Constructor_InvalidMerkleRoot();
+    error UpdateMerkleRoot_InvalidMerkleRoot();
 
     event MerkleRootUpdated(bytes32 newRoot);
 
@@ -16,6 +17,7 @@ contract VeriFi {
     }
 
     function updateMerkleRoot(bytes32 newRoot) external {
+        if (newRoot == bytes32(0)) revert UpdateMerkleRoot_InvalidMerkleRoot();
         MERKLE_ROOT = newRoot;
         emit MerkleRootUpdated(newRoot);
     }
