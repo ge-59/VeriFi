@@ -9,4 +9,8 @@ contract VeriFi {
     constructor(bytes32 merkleRoot) {
         MERKLE_ROOT = merkleRoot;
     }
+
+    function verifyAddress(address account, bytes32[] calldata proof) public view returns (bool) {
+        
+    }
 }
