@@ -66,4 +66,6 @@ contract VeriFiTest is Test {
         vm.prank(user);
         veriFi.updateMerkleRoot(newRoot);
     }
+
+    function testCheck() public {}
 }
