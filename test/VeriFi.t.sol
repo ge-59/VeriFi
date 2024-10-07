@@ -67,5 +67,4 @@ contract VeriFiTest is Test {
         veriFi.updateMerkleRoot(newRoot);
     }
 
-    function testCheck() public {}
 }
